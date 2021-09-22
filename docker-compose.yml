@@ -1,0 +1,26 @@
+version: '2'
+ 
+services:
+  app:
+    build:
+      context:  ./dotnetdocker
+      dockerfile: Dockerfile
+    expose:
+      - "5000"
+ 
+  app2:
+   build:
+     context:  ./dotnetdocker2
+     dockerfile: Dockerfile
+   expose:
+     - "5000"
+
+  proxy:
+    build:
+      context:  ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8084:80"
+    links:
+      - app
+      - app2
